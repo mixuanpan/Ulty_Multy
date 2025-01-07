@@ -14,7 +14,7 @@ function data = ip_data_filter(subject_num)
 %% ____________________
 %% CALCULATIONS
     while checker % bandpass filter bounds from user input 
-        indicator = input("Do you want to bandpass filter? (y/n)", 's');
+        indicator = input("Do you want to bandpass filter (y/n)? ", 's');
         if strcmp(lower(indicator), "y")
             while checker2
                 low = input("Enter the lower bound in Hz: ");
@@ -31,6 +31,9 @@ function data = ip_data_filter(subject_num)
                 if upper > 40
                     fprintf("Entered upper bound is too high!\n")
                     fprintf("Please enter a positive number smaller than 40 Hz!\n")
+                elseif upper < low
+                    fprintf("Entered upper bound is too low!\n")
+                    fprintf("Upper bound must be higher than lower bound!\n")
                 else
                     checker2 = false;
                 end
@@ -45,7 +48,7 @@ function data = ip_data_filter(subject_num)
 
     checker = true;
     while checker % noise removal 
-        indicator = input("Do you want to remove a specific powerline? (y/n)", 's');
+        indicator = input("Do you want to remove a specific powerline (y/n)? ", 's');
         if strcmp(lower(indicator), 'y')
             noise_num = menu("Enter the notch filter to be filtered out", "50 Hz (common in Europe and most countries)", "60 Hz (common in North America)"); 
             EEG = pop_eegfiltnew(EEG, (40 + 10 * noise_num) - 1, (40 + 10 * noise_num) + 1, [], 1); % notch filter 
