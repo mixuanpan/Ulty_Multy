@@ -1,7 +1,7 @@
 function [power, freqs] = ip_time_frequency_analysis(input_data)
 %% ____________________
 %% INITIALIZATION
-    fprintf("\nTime Frequency Analysis\n"); % inform the user of the analysis type 
+    fprintf("\n<strong>Time Frequency Analysis</strong>\n"); % inform the user of the analysis type 
     EEG = input_data;
     channels_num = size(EEG.data, 1); % number of channels 
     power = cell(1, channels_num); % a cell array to store power 

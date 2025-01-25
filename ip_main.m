@@ -11,6 +11,7 @@ if consent
     data = ip_data_filter(subject_num); % filter data 
     [power, freqs1] = ip_time_frequency_analysis(data); % time frequency analysis for the user-given channel(s)
     ip_brain_plot(data, subject_num); % view the relative location of each channel in a 3D interactive graph
+    fprintf("\nAnalysis Successful.\n\n");
 %% ____________________
 %% OUTPUTS
 

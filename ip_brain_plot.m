@@ -12,6 +12,7 @@ function ip_brain_plot(data, subject_num)
     labels = channels.name; % extract the name column of the channels to show in the final 3D graph
     %% ____________________
     %% FORMATTED TEXT & FIGURE DISPLAYS
+    fprintf("\n<strong>Brain Plotting Begins</strong>\n");
     % ask the user if they want to highlight a specific channel 
     while checker 
         indicator = input("Do you want to highlight a specific channel (y/n)? ", "s");
@@ -37,10 +38,8 @@ function ip_brain_plot(data, subject_num)
             % determine highlight 
             if i == highlight
                 color = "red";
-                fprintf("red\n");
             else
                 color = "black";
-                fprintf("black\n");
             end
 
             % add each label name to the data points 

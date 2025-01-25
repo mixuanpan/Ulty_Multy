@@ -1,7 +1,7 @@
 function data = ip_data_filter(subject_num)
 %% ____________________
 %% INITIALIZATION
-    fprintf("\nEEG Data Filtering Begins\n")
+    fprintf("\n<strong>EEG Data Filtering Begins</strong>\n")
     currentPath = "/Users/mixuan/Desktop/Ulty_Multy";
     fileName = "sub-" + int2str(subject_num) + "_task-SemanticCategorization_eeg.set"; % the file for reading EEG data
     filePath = fullfile(currentPath, "data", "sub-" + int2str(subject_num), "eeg"); % the path for the EEG data file 

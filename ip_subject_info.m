@@ -28,10 +28,10 @@ function subject_num = ip_subject_info(par)
     id = "sub-" + int2str(subject_num); % target subject id 
 %% ____________________
 %% FORMATTED TEXT & FIGURE DISPLAYS
-    fprintf("\nSubject Info:\n");
+    fprintf("\n<strong>Subject Info:</strong>\n");
     disp(par(matches(par.participant_id, id), :)); % similar to the "find" function but comparing in tables 
 
-    fprintf("\nSubject Settings:\n");
+    fprintf("\n<strong>Subject Settings:</strong>\n");
     fileName = fullfile("data", sprintf("sub-%d", subject_num), "eeg", sprintf("sub-%d_task-SemanticCategorization_eeg.json", subject_num));
     jsonData = jsondecode(fileread(fileName));
     disp(jsonData)
