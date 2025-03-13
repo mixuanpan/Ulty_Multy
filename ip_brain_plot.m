@@ -40,6 +40,7 @@ function ip_brain_plot(data, subject_num)
                 % variable "highlight" doesn't exist if the user didn't
                 % specify it 
                 color = "red";
+                % default color is black 
             end 
 
             % add each label name to the data points 
