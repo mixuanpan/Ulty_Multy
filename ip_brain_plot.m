@@ -4,7 +4,7 @@ function ip_brain_plot(data, subject_num)
     EEG = data; % EEG data from user input 
     chanlocs = EEG.chanlocs; % extract channel locations 
     checker = true; % loop control variable 
-    color = "black"; % the color of the highlighted channel on the 3D brain map 
+    color = "black"; % the color of the highlighted channel on the 3D brain map, default black 
     %% ____________________
     %% CALCULATIONS
     channels = readtable(sprintf("data/sub-%d/eeg/sub-%d_task-SemanticCategorization_channels.tsv", subject_num, subject_num), "FileType", "text", "Delimiter", "\t");
@@ -40,7 +40,6 @@ function ip_brain_plot(data, subject_num)
                 % variable "highlight" doesn't exist if the user didn't
                 % specify it 
                 color = "red";
-                % default color is black 
             end 
 
             % add each label name to the data points 
