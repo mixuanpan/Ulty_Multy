@@ -1,4 +1,4 @@
-function data = ip_data_filter(subject_num)
+function [data, low, upper, noise_num] = ip_data_filter(subject_num)
 %% ____________________
 %% INITIALIZATION
     fprintf("\n<strong>EEG Data Filtering Begins</strong>\n")
@@ -11,6 +11,9 @@ function data = ip_data_filter(subject_num)
     cd(currentPath); % change to working directory 
     checker = true; % while loop control variable 
     checker2 = true; % another loop control variable 
+    low = 0; % initialize the lower bound
+    upper = 0; % initialize the upper bound 
+    noise_num = 0; % initialize the powerline to be removed 
 %% ____________________
 %% CALCULATIONS
     while checker % bandpass filter bounds from user input 
@@ -51,7 +54,8 @@ function data = ip_data_filter(subject_num)
         indicator = input("Do you want to remove a specific powerline (y/n)? ", 's');
         if strcmp(lower(indicator), 'y')
             noise_num = menu("Enter the notch filter to be filtered out", "50 Hz (common in Europe and most countries)", "60 Hz (common in North America)"); 
-            EEG = pop_eegfiltnew(EEG, (40 + 10 * noise_num) - 1, (40 + 10 * noise_num) + 1, [], 1); % notch filter 
+            noise_num = 40 + 10 * noise_num; % convert 1, 2 (index) to 50, 60 (notch filter)
+            EEG = pop_eegfiltnew(EEG, noise_num - 1, noise_num + 1, [], 1); % notch filter 
             checker = false;
         elseif strcmp(lower(indicator), 'n')
             checker = false;

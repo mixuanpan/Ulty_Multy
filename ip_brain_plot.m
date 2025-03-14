@@ -4,7 +4,6 @@ function ip_brain_plot(data, subject_num)
     EEG = data; % EEG data from user input 
     chanlocs = EEG.chanlocs; % extract channel locations 
     checker = true; % loop control variable 
-    color = "black"; % the color of the highlighted channel on the 3D brain map, default black 
     %% ____________________
     %% CALCULATIONS
     channels = readtable(sprintf("data/sub-%d/eeg/sub-%d_task-SemanticCategorization_channels.tsv", subject_num, subject_num), "FileType", "text", "Delimiter", "\t");
@@ -40,6 +39,8 @@ function ip_brain_plot(data, subject_num)
                 % variable "highlight" doesn't exist if the user didn't
                 % specify it 
                 color = "red";
+            else 
+                color = "black"; % the color of the highlighted channel on the 3D brain map, default black 
             end 
 
             % add each label name to the data points 
@@ -61,5 +62,6 @@ function ip_brain_plot(data, subject_num)
         % since brain is not a sphere, we need the relative scale of X, Y
         % and Z
     grid on;
+    waitfor(gcf); % wait until the graph is closed to proceed to the next step
     %% ____________________
 end

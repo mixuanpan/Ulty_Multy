@@ -37,7 +37,7 @@ function [power, freqs] = ip_time_frequency_analysis(input_data)
         colorbar;
 
         waitfor(gcf); % wait until the figure is closed by the user
-        checker2 = input("Do you want to visualize another channel (y/n)?", "s");
+        checker2 = input("Do you want to visualize another channel (y/n)? ", "s");
         if strcmp(lower(checker2), "n")
             checker = false;
         elseif ~strcmp(lower(checker2), "y")
