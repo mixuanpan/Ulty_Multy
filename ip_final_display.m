@@ -8,12 +8,9 @@ function ip_final_display(subject_num, low, upper, noise_num, freqs, power_spec)
     invalid_num = [14 15 25]; % no subjects found 
     current_subject = 1; % subjects to iterate through, starting from 1
     currentPath = "/Users/mixuan/Desktop/Ulty_Multy"; % data directory 
-    % resultsPath = "/Users/mixuan/Desktop/Ulty_Multy/Results"; % results directory 
+    resultsPath = "/Users/mixuan/Desktop/Ulty_Multy/Results"; % results directory 
     channels_num = 32; % number of channels in the given data 
-    % outputFileName = "output.txt"; % txt file that stores the output 
-    % fileID = fopen(fullfile(resultsPath, outputFileName), 'wt'); % open the output file for writing 
-    % overwrites the file if it already exist 
-
+    
     %% ip_brain_plot.m
     channels = readtable(sprintf("data/sub-%d/eeg/sub-%d_task-SemanticCategorization_channels.tsv", subject_num, subject_num), "FileType", "text", "Delimiter", "\t");
     labels = channels.name;
@@ -51,27 +48,30 @@ function ip_final_display(subject_num, low, upper, noise_num, freqs, power_spec)
         end
         
         %% ip_time_frequency_analysis.m 
-        figure; % initialize a single window figure 
+        fig = figure("Visible", "off"); % Set the figure to be invisible 
+        layout = tiledlayout(4, 8, 'Padding', 'compact', 'TileSpacing', 'compact'); % % 4 rows, 8 columns for 32 subplots
         for ch = 1:channels_num
             % Wavelet Decomposition for each channel 
             power_data = timefreq(EEG.data(ch, :), EEG.srate, 'freqs', [1, 60]); % power data for this specific channel 
             % only need the power data, neglecting the frequency 
-            % formatting for the output file 
-            % fprintf(fileID, "%i\t%i\t%f\t", current_subject, ch, abs(power_data)); % write power data as a tab-separated value 
-            % fprintf(fileID, "\n"); % next line -> next channel 
-            subplot(4, 8, ch); 
-            hold on; 
-            plot(freqs, power_data, 'Color', [0.7, 0.7, 0.7]);
+            nexttile;
+            plot(freqs, abs(power_data), 'Color', [0.7, 0.7, 0.7, 0.03]); % Compared subject data in gray 
+            hold on; % stay on the same figure 
+            plot(freqs, abs(power_spec{ch}), 'Color', [1, 0, 0, 0.006], "LineWidth", 1.5); % Target subject data in red
+            title(sprintf("%s", labels{ch}), "FontWeight", "bold", 'Units', 'normalized', 'Position', [1, 1, 1]); % Channel name for each subplot 
         end 
+
+        % Graph formatting for all subplots 
+        xlabel(layout, "Frequency (Hz)", "FontWeight", "bold"); % overall y label 
+        ylabel(layout, "Power (VA)", "FontWeight", "bold"); % overall x label 
+        title(layout, sprintf("Subject %i - Gray vs. Target Subject - Red (%i)", current_subject, subject_num)); % overall title 
         
+        saveas(fig, fullfile(resultsPath, sprintf("output_%i.png", current_subject))); % save the graph file 
+        close(fig); % close the current figure 
+
         fprintf("\n<strong>Final display progress: subject %i</strong>\n\n", current_subject);
         current_subject = current_subject + 1; % change to the next subject 
     end
 
-    for ch = 1:channels_num
-        subplot(4, 8, ch); 
-        hold on; 
-        plot(freqs, abs(power_spec{ch}), "r", "LineWidth", 1.5); % Target subject in red
-    end
     
 end
