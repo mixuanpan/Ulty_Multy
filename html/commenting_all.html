@@ -9,7 +9,7 @@ To make changes, update the MATLAB code and republish this document.
 <title>Ulty Multy - EEG Data Analysis and Visualization</title>
 <meta name="generator" content="MATLAB 24.2">
 <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
-<meta name="DC.date" content="2025-03-20">
+<meta name="DC.date" content="2025-03-22">
 <meta name="DC.source" content="commenting_all.m">
 <style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
@@ -78,7 +78,7 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 <div class="content">
 <h1>Ulty Multy - EEG Data Analysis and Visualization</h1>
 <!--introduction-->
-<p>Welcome to the tutorial of Ulty Multy !</p>
+<p>Welcome to the tutorial of Ulty Multy!</p>
 <p>This project utilizes the open data from OpenNeuro to analyze and visualize EEG data.</p>
 <!--/introduction-->
 <h2>Contents</h2>
@@ -111,7 +111,9 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 </ul>
 </div>
 <h2 id="1">Foreword</h2>
-<p>After</p>
+<p>Electroencephalogram (EEG) data analysis plays a crucial role in understanding brain activity, enabling advancements in neuroscience, biomedical engineering, and brain-computer interfaces. This user manual serves as a comprehensive guide to Ulty Multy, a MATLAB and EEGLAB-based system designed to streamline EEG data processing, feature extraction, and visualization.</p>
+<p>Developed to improve the efficiency and accuracy of EEG analysis, this tool integrates automated preprocessing workflows, advanced signal processing techniques, and intuitive graphical displays. Whether you are a researcher, student, or practitioner working with EEG data, this manual provides detailed instructions on system functionalities, from data loading to final interpretation.</p>
+<p>By following this guide, users will gain a clear understanding of how to leverage the tool for extracting meaningful insights from EEG recordings. We hope this manual enhances your experience and facilitates a deeper exploration of brainwave patterns and cognitive analysis.</p>
 <h2 id="2">Main Script</h2>
 <p>This is the file to run to start the program</p>
 <pre class="codeinput">
@@ -214,10 +216,10 @@ A purple (--) means you can blink as much as you want.
 <pre class="codeoutput error">Error using input
 Cannot call INPUT from EVALC.
 
-Error in commenting_all&gt;ip_welcome (line 75)
+Error in commenting_all&gt;ip_welcome (line 91)
     consent = input("Do you allow this tool to perform data analysis (y/n)? ", "s");
               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Error in commenting_all (line 15)
+Error in commenting_all (line 31)
 consent = ip_welcome(); 
           ^^^^^^^^^^^^</pre>
 <h2 id="4">Subject Number &amp; Info Function</h2>
@@ -446,7 +448,8 @@ consent = ip_welcome();
     checker = true; <span class="comment">% loop control variable</span>
 
     <span class="comment">% extract the channels for the given subject number from the file</span>
-    channels = readtable(sprintf(<span class="string">"data/sub-%d/eeg/sub-%d_task-SemanticCategorization_channels.tsv"</span>, subject_num, subject_num), <span class="string">"FileType"</span>, <span class="string">"text"</span>, <span class="string">"Delimiter"</span>, <span class="string">"\t"</span>);
+    channels = readtable(sprintf(<span class="string">"data/sub-%d/eeg/sub-%d_task-SemanticCategorization_channels.tsv"</span>, subject_num, subject_num), <span class="string">"FileType"</span>, <span class="string">"text"</span>, <span class="keyword">...</span>
+        <span class="string">"Delimiter"</span>, <span class="string">"\t"</span>);
 
     <span class="comment">% extract the name column of the channels to show in the final 3D graph</span>
     labels = channels.name;
@@ -482,7 +485,9 @@ consent = ip_welcome();
                 <span class="comment">% specify it</span>
                 color = <span class="string">"red"</span>;
             <span class="keyword">else</span>
-                color = <span class="string">"black"</span>; <span class="comment">% the color of the highlighted channel on the 3D brain map, default black</span>
+                <span class="comment">% the color of the highlighted channel on the 3D brain map,</span>
+                <span class="comment">% default black</span>
+                color = <span class="string">"black"</span>;
             <span class="keyword">end</span>
 
             <span class="comment">% add each label name to the data points</span>
@@ -517,15 +522,20 @@ consent = ip_welcome();
 
     <span class="comment">% Initialization</span>
     fprintf(<span class="string">"\n&lt;strong&gt;Final Analysis Results:&lt;/strong&gt;\n\n"</span>);
-    subject_count = 27; <span class="comment">% There are a total of 27 subjects with 3 missing data</span>
+
+    <span class="comment">% There are a total of 27 subjects with 3 missing data</span>
+    subject_count = 27;
     invalid_num = [14 15 25]; <span class="comment">% no subjects found</span>
     current_subject = 1; <span class="comment">% subjects to iterate through, starting from 1</span>
     currentPath = <span class="string">"/Users/mixuan/Desktop/Ulty_Multy"</span>; <span class="comment">% data directory</span>
-    resultsPath = <span class="string">"/Users/mixuan/Desktop/Ulty_Multy/Results"</span>; <span class="comment">% results directory</span>
+
+    <span class="comment">% results directory</span>
+    resultsPath = <span class="string">"/Users/mixuan/Desktop/Ulty_Multy/Results"</span>;
     channels_num = 32; <span class="comment">% number of channels in the given data</span>
 
     <span class="comment">% ip_brain_plot.m</span>
-    channels = readtable(sprintf(<span class="string">"data/sub-%d/eeg/sub-%d_task-SemanticCategorization_channels.tsv"</span>, subject_num, subject_num), <span class="string">"FileType"</span>, <span class="string">"text"</span>, <span class="string">"Delimiter"</span>, <span class="string">"\t"</span>);
+    channels = readtable(sprintf(<span class="string">"data/sub-%d/eeg/sub-%d_task-SemanticCategorization_channels.tsv"</span>, subject_num, subject_num), <span class="string">"FileType"</span>, <span class="string">"text"</span>, <span class="keyword">...</span>
+        <span class="string">"Delimiter"</span>, <span class="string">"\t"</span>);
     labels = channels.name;
     <span class="comment">% names of the 32 channels</span>
 
@@ -534,6 +544,7 @@ consent = ip_welcome();
         <span class="comment">% ip_subject_info.m</span>
         <span class="comment">% check if the current subject is the target subject</span>
         current_subject = current_subject + (current_subject == subject_num) * (current_subject &lt; subject_count);
+
         <span class="comment">% check if the subject number is invalid</span>
         <span class="keyword">if</span> current_subject &gt;= invalid_num(1) &amp;&amp; current_subject &lt;= invalid_num(end)
             <span class="keyword">for</span> i = 1:length(invalid_num)
@@ -544,17 +555,24 @@ consent = ip_welcome();
         <span class="comment">% ip_data_filter</span>
         <span class="comment">% filter each subject data with the bandwith given to the target</span>
         <span class="comment">% subject</span>
-        fileName = <span class="string">"sub-"</span> + int2str(current_subject) + <span class="string">"_task-SemanticCategorization_eeg.set"</span>; <span class="comment">% the file for reading EEG data</span>
-        filePath = fullfile(currentPath, <span class="string">"data"</span>, <span class="string">"sub-"</span> + int2str(current_subject), <span class="string">"eeg"</span>); <span class="comment">% the path for the EEG data file</span>
+        <span class="comment">% the file for reading EEG data</span>
+        fileName = <span class="string">"sub-"</span> + int2str(current_subject) + <span class="string">"_task-SemanticCategorization_eeg.set"</span>;
+
+        <span class="comment">% the path for the EEG data file</span>
+        filePath = fullfile(currentPath, <span class="string">"data"</span>, <span class="string">"sub-"</span> + int2str(current_subject), <span class="string">"eeg"</span>);
         cd(filePath); <span class="comment">% change to file directory</span>
-        EEG = pop_loadset(char(fileName)); <span class="comment">% load eeg data list from the current subject</span>
+
+        <span class="comment">% load eeg data list from the current subject</span>
+        EEG = pop_loadset(char(fileName));
         cd(currentPath) <span class="comment">% back to script directory</span>
+
         <span class="comment">% bandpass filter</span>
         <span class="keyword">if</span> low ~= 0 &amp;&amp; upper ~= 0
             <span class="comment">% both "low ~= 0" and "upper ~= 0" are numeric scales -&gt;</span>
             <span class="comment">% use &amp;&amp; instead of &amp; for performance</span>
             EEG = pop_eegfiltnew(EEG, low, upper); <span class="comment">% Bandpass filter in the desired Hz range</span>
         <span class="keyword">end</span>
+
         <span class="comment">% noise removal</span>
         <span class="keyword">if</span> noise_num ~= 0
             EEG = pop_eegfiltnew(EEG, noise_num - 1, noise_num + 1, [], 1); <span class="comment">% notch filter</span>
@@ -562,31 +580,43 @@ consent = ip_welcome();
 
         <span class="comment">% ip_time_frequency_analysis.m</span>
         fig = figure(<span class="string">"Visible"</span>, <span class="string">"off"</span>); <span class="comment">% Set the figure to be invisible</span>
-        layout = tiledlayout(4, 8, <span class="string">'Padding'</span>, <span class="string">'compact'</span>, <span class="string">'TileSpacing'</span>, <span class="string">'compact'</span>); <span class="comment">% % 4 rows, 8 columns for 32 subplots</span>
+
+        <span class="comment">% % 4 rows, 8 columns for 32 subplots</span>
+        layout = tiledlayout(4, 8, <span class="string">'Padding'</span>, <span class="string">'compact'</span>, <span class="string">'TileSpacing'</span>, <span class="string">'compact'</span>);
         <span class="keyword">for</span> ch = 1:channels_num
+
             <span class="comment">% Wavelet Decomposition for each channel</span>
-            power_data = timefreq(EEG.data(ch, :), EEG.srate, <span class="string">'freqs'</span>, [1, 60]); <span class="comment">% power data for this specific channel</span>
+            <span class="comment">% power data for this specific channel</span>
             <span class="comment">% only need the power data, neglecting the frequency</span>
+            power_data = timefreq(EEG.data(ch, :), EEG.srate, <span class="string">'freqs'</span>, [1, 60]);
+
             nexttile;
-            plot(freqs, abs(power_data), <span class="string">'Color'</span>, [0.7, 0.7, 0.7, 0.03]); <span class="comment">% Compared subject data in gray</span>
+
+            <span class="comment">% Compared subject data in gray</span>
+            plot(freqs, abs(power_data), <span class="string">'Color'</span>, [0.7, 0.7, 0.7, 0.03]);
             hold <span class="string">on</span>; <span class="comment">% stay on the same figure</span>
-            plot(freqs, abs(power_spec{ch}), <span class="string">'Color'</span>, [1, 0, 0, 0.006], <span class="string">"LineWidth"</span>, 1.5); <span class="comment">% Target subject data in red</span>
-            title(sprintf(<span class="string">"%s"</span>, labels{ch}), <span class="string">"FontWeight"</span>, <span class="string">"bold"</span>, <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="string">'Position'</span>, [1, 1, 1]); <span class="comment">% Channel name for each subplot</span>
+
+            <span class="comment">% Target subject data in red</span>
+            plot(freqs, abs(power_spec{ch}), <span class="string">'Color'</span>, [1, 0, 0, 0.006], <span class="string">"LineWidth"</span>, 1.5);
+
+            <span class="comment">% Channel name for each subplot</span>
+            title(sprintf(<span class="string">"%s"</span>, labels{ch}), <span class="string">"FontWeight"</span>, <span class="string">"bold"</span>, <span class="string">'Units'</span>, <span class="string">'normalized'</span>, <span class="string">'Position'</span>, [1, 1, 1]);
         <span class="keyword">end</span>
 
         <span class="comment">% Graph formatting for all subplots</span>
-        xlabel(layout, <span class="string">"Frequency (Hz)"</span>, <span class="string">"FontWeight"</span>, <span class="string">"bold"</span>); <span class="comment">% overall y label</span>
-        ylabel(layout, <span class="string">"Power (VA)"</span>, <span class="string">"FontWeight"</span>, <span class="string">"bold"</span>); <span class="comment">% overall x label</span>
-        title(layout, sprintf(<span class="string">"Subject %i - Gray vs. Target Subject - Red (%i)"</span>, current_subject, subject_num)); <span class="comment">% overall title</span>
+        xlabel(layout, <span class="string">"Frequency (Hz)"</span>, <span class="string">"FontWeight"</span>, <span class="string">"bold"</span>); <span class="comment">% y label</span>
+        ylabel(layout, <span class="string">"Power (VA)"</span>, <span class="string">"FontWeight"</span>, <span class="string">"bold"</span>); <span class="comment">% x label</span>
 
-        saveas(fig, fullfile(resultsPath, sprintf(<span class="string">"output_%i.png"</span>, current_subject))); <span class="comment">% save the graph file</span>
+        <span class="comment">% title</span>
+        title(layout, sprintf(<span class="string">"Subject %i - Gray vs. Target Subject - Red (%i)"</span>, current_subject, subject_num));
+
+        <span class="comment">% save the graph file</span>
+        saveas(fig, fullfile(resultsPath, sprintf(<span class="string">"output_%i.png"</span>, current_subject)));
         close(fig); <span class="comment">% close the current figure</span>
 
         fprintf(<span class="string">"\n&lt;strong&gt;Final display progress: subject %i&lt;/strong&gt;\n\n"</span>, current_subject);
         current_subject = current_subject + 1; <span class="comment">% change to the next subject</span>
     <span class="keyword">end</span>
-
-
 <span class="keyword">end</span>
 </pre>
 <p class="footer">
@@ -598,14 +628,30 @@ consent = ip_welcome();
 <!--
 ##### SOURCE BEGIN #####
 %% Ulty Multy - EEG Data Analysis and Visualization 
-% Welcome to the tutorial of Ulty Multy ! 
+% Welcome to the tutorial of Ulty Multy! 
 % 
 % This project utilizes the open data from OpenNeuro to analyze and
 % visualize EEG data. 
 
 %% Foreword 
+% Electroencephalogram (EEG) data analysis plays a crucial role in 
+% understanding brain activity, enabling advancements in neuroscience, 
+% biomedical engineering, and brain-computer interfaces. This user manual 
+% serves as a comprehensive guide to Ulty Multy, a MATLAB and EEGLAB-based 
+% system designed to streamline EEG data processing, feature extraction, 
+% and visualization.
+%
+% Developed to improve the efficiency and accuracy of EEG analysis, this 
+% tool integrates automated preprocessing workflows, advanced signal 
+% processing techniques, and intuitive graphical displays. Whether you are 
+% a researcher, student, or practitioner working with EEG data, this manual 
+% provides detailed instructions on system functionalities, from data 
+% loading to final interpretation.
 % 
-% After 
+% By following this guide, users will gain a clear understanding of how to 
+% leverage the tool for extracting meaningful insights from EEG recordings. 
+% We hope this manual enhances your experience and facilitates a deeper 
+% exploration of brainwave patterns and cognitive analysis.
 
 %% Main Script  
 % This is the file to run to start the program 
@@ -954,7 +1000,8 @@ function ip_brain_plot(data, subject_num)
     checker = true; % loop control variable 
     
     % extract the channels for the given subject number from the file
-    channels = readtable(sprintf("data/sub-%d/eeg/sub-%d_task-SemanticCategorization_channels.tsv", subject_num, subject_num), "FileType", "text", "Delimiter", "\t");
+    channels = readtable(sprintf("data/sub-%d/eeg/sub-%d_task-SemanticCategorization_channels.tsv", subject_num, subject_num), "FileType", "text", ... 
+        "Delimiter", "\t");
     
     % extract the name column of the channels to show in the final 3D graph
     labels = channels.name; 
@@ -990,7 +1037,9 @@ function ip_brain_plot(data, subject_num)
                 % specify it 
                 color = "red";
             else 
-                color = "black"; % the color of the highlighted channel on the 3D brain map, default black 
+                % the color of the highlighted channel on the 3D brain map, 
+                % default black 
+                color = "black"; 
             end 
 
             % add each label name to the data points 
@@ -1032,15 +1081,20 @@ function ip_final_display(subject_num, low, upper, noise_num, freqs, power_spec)
 
     % Initialization 
     fprintf("\n<strong>Final Analysis Results:</strong>\n\n");
-    subject_count = 27; % There are a total of 27 subjects with 3 missing data 
+    
+    % There are a total of 27 subjects with 3 missing data 
+    subject_count = 27; 
     invalid_num = [14 15 25]; % no subjects found 
     current_subject = 1; % subjects to iterate through, starting from 1
     currentPath = "/Users/mixuan/Desktop/Ulty_Multy"; % data directory 
-    resultsPath = "/Users/mixuan/Desktop/Ulty_Multy/Results"; % results directory 
+    
+    % results directory 
+    resultsPath = "/Users/mixuan/Desktop/Ulty_Multy/Results"; 
     channels_num = 32; % number of channels in the given data 
     
     % ip_brain_plot.m
-    channels = readtable(sprintf("data/sub-%d/eeg/sub-%d_task-SemanticCategorization_channels.tsv", subject_num, subject_num), "FileType", "text", "Delimiter", "\t");
+    channels = readtable(sprintf("data/sub-%d/eeg/sub-%d_task-SemanticCategorization_channels.tsv", subject_num, subject_num), "FileType", "text", ... 
+        "Delimiter", "\t");
     labels = channels.name;
     % names of the 32 channels 
 
@@ -1049,6 +1103,7 @@ function ip_final_display(subject_num, low, upper, noise_num, freqs, power_spec)
         % ip_subject_info.m
         % check if the current subject is the target subject 
         current_subject = current_subject + (current_subject == subject_num) * (current_subject < subject_count);
+        
         % check if the subject number is invalid 
         if current_subject >= invalid_num(1) && current_subject <= invalid_num(end)
             for i = 1:length(invalid_num)
@@ -1059,17 +1114,24 @@ function ip_final_display(subject_num, low, upper, noise_num, freqs, power_spec)
         % ip_data_filter 
         % filter each subject data with the bandwith given to the target
         % subject 
-        fileName = "sub-" + int2str(current_subject) + "_task-SemanticCategorization_eeg.set"; % the file for reading EEG data
-        filePath = fullfile(currentPath, "data", "sub-" + int2str(current_subject), "eeg"); % the path for the EEG data file 
+        % the file for reading EEG data
+        fileName = "sub-" + int2str(current_subject) + "_task-SemanticCategorization_eeg.set"; 
+
+        % the path for the EEG data file 
+        filePath = fullfile(currentPath, "data", "sub-" + int2str(current_subject), "eeg"); 
         cd(filePath); % change to file directory 
-        EEG = pop_loadset(char(fileName)); % load eeg data list from the current subject 
+
+        % load eeg data list from the current subject 
+        EEG = pop_loadset(char(fileName)); 
         cd(currentPath) % back to script directory 
+
         % bandpass filter 
         if low ~= 0 && upper ~= 0
             % both "low ~= 0" and "upper ~= 0" are numeric scales ->
             % use && instead of & for performance 
             EEG = pop_eegfiltnew(EEG, low, upper); % Bandpass filter in the desired Hz range 
         end
+
         % noise removal 
         if noise_num ~= 0
             EEG = pop_eegfiltnew(EEG, noise_num - 1, noise_num + 1, [], 1); % notch filter 
@@ -1077,31 +1139,43 @@ function ip_final_display(subject_num, low, upper, noise_num, freqs, power_spec)
         
         % ip_time_frequency_analysis.m 
         fig = figure("Visible", "off"); % Set the figure to be invisible 
-        layout = tiledlayout(4, 8, 'Padding', 'compact', 'TileSpacing', 'compact'); % % 4 rows, 8 columns for 32 subplots
+
+        % % 4 rows, 8 columns for 32 subplots
+        layout = tiledlayout(4, 8, 'Padding', 'compact', 'TileSpacing', 'compact'); 
         for ch = 1:channels_num
+            
             % Wavelet Decomposition for each channel 
-            power_data = timefreq(EEG.data(ch, :), EEG.srate, 'freqs', [1, 60]); % power data for this specific channel 
+            % power data for this specific channel 
             % only need the power data, neglecting the frequency 
+            power_data = timefreq(EEG.data(ch, :), EEG.srate, 'freqs', [1, 60]); 
+            
             nexttile;
-            plot(freqs, abs(power_data), 'Color', [0.7, 0.7, 0.7, 0.03]); % Compared subject data in gray 
+            
+            % Compared subject data in gray 
+            plot(freqs, abs(power_data), 'Color', [0.7, 0.7, 0.7, 0.03]);
             hold on; % stay on the same figure 
-            plot(freqs, abs(power_spec{ch}), 'Color', [1, 0, 0, 0.006], "LineWidth", 1.5); % Target subject data in red
-            title(sprintf("%s", labels{ch}), "FontWeight", "bold", 'Units', 'normalized', 'Position', [1, 1, 1]); % Channel name for each subplot 
+
+            % Target subject data in red
+            plot(freqs, abs(power_spec{ch}), 'Color', [1, 0, 0, 0.006], "LineWidth", 1.5); 
+
+            % Channel name for each subplot 
+            title(sprintf("%s", labels{ch}), "FontWeight", "bold", 'Units', 'normalized', 'Position', [1, 1, 1]); 
         end 
 
         % Graph formatting for all subplots 
-        xlabel(layout, "Frequency (Hz)", "FontWeight", "bold"); % overall y label 
-        ylabel(layout, "Power (VA)", "FontWeight", "bold"); % overall x label 
-        title(layout, sprintf("Subject %i - Gray vs. Target Subject - Red (%i)", current_subject, subject_num)); % overall title 
+        xlabel(layout, "Frequency (Hz)", "FontWeight", "bold"); % y label 
+        ylabel(layout, "Power (VA)", "FontWeight", "bold"); % x label 
+
+        % title 
+        title(layout, sprintf("Subject %i - Gray vs. Target Subject - Red (%i)", current_subject, subject_num)); 
         
-        saveas(fig, fullfile(resultsPath, sprintf("output_%i.png", current_subject))); % save the graph file 
+        % save the graph file 
+        saveas(fig, fullfile(resultsPath, sprintf("output_%i.png", current_subject)));
         close(fig); % close the current figure 
 
         fprintf("\n<strong>Final display progress: subject %i</strong>\n\n", current_subject);
         current_subject = current_subject + 1; % change to the next subject 
     end
-
-    
 end
 ##### SOURCE END #####
 -->
