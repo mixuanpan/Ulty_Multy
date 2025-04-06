@@ -3,7 +3,8 @@ An attempt to make brain-implantable chips for the good
 
 # User Manual 
 
-[HackMD Notes](https://hackmd.io/kw_HkAGXTfCmJGPd_e9kiw)
+[EEG Data Analysis and Visualization](https://hackmd.io/kw_HkAGXTfCmJGPd_e9kiw)
+[EMG Level Detector](https://hackmd.io/@Mixuan/rJRPRPlAJg)
 
 # Dataset
 
