@@ -23,6 +23,8 @@ Aaron J Newman. Time and Frequency Domains. https://neuraldatascience.io/7-eeg/t
 
 Alex Teghipco. Brain Surfer. https://github.com/alexteghipco/brainSurfer.
 
+ARIAT TECH. LM324 Operational Amplifiers: Pinouts, Application Examples, Size Packages, Datasheets. 16 Dec. 2023, https://www.ariat-tech.com/blog/lm324-operational-amplifiers-pinouts,application-examples,size-packages,datasheets.html.
+
 Arnaud Delorme and Scott Makeig. EEGLAB. https://eeglab.org/.
 ---. EEGLAB Tutorial. 2003, https://sccn.ucsd.edu/eeglab/download/eeglabtutorial4.2.pdf.
 
@@ -39,6 +41,9 @@ John Ashburner, et al. SPM12 Manual. Functional Imaging Laboratory, Wellcome Cen
 Makoto’s Useful EEGLAB Code. https://sccn.ucsd.edu/wiki/Makoto%27s_useful_EEGLAB_code#How_to_load_EEGLAB_.set_and_.fdt_files_without_using_EEGLAB_.2805.2F09.2F2020_updated.29.
 
 Pedro Silva. Creating .Txt File with Matlab. 22 May 2012, https://arc.net/l/quote/mfzdcxbs.
+
+Texas Instruments. LM555 Timer. Texas Instruments Incorporated, 21 Oct. 2014, https://arc.net/l/quote/lfnlvizb.
+---. LM741 Operational Amplifier. Texas Instruments Incorporated, 30 Oct. 2015, https://arc.net/l/quote/nkdecbuu.
 
 Wojciech Zaremba. Pop_loadset. 6 June 2013, https://github.com/wojzaremba/active-delays/blob/master/external_tools/eeglab11_0_4_3b/functions/popfunc/pop_loadset.m.
 
