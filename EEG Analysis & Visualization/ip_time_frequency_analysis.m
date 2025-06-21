@@ -1,4 +1,4 @@
-function [power, freqs] = ip_time_frequency_analysis(input_data)
+function [channels_num, power, freqs] = ip_time_frequency_analysis(input_data)
 %% ____________________
 %% INITIALIZATION
     fprintf("\n<strong>Time Frequency Analysis</strong>\n"); % inform the user of the analysis type 

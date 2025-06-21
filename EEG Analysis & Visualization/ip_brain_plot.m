@@ -1,4 +1,4 @@
-function ip_brain_plot(data, subject_num)
+function labels = ip_brain_plot(data, subject_num)
 %% ____________________
     %% INITIALIZATION
     EEG = data; % EEG data from user input 
