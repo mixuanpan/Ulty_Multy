@@ -9,7 +9,7 @@ function subject_num = ip_subject_info(invalid_num)
     while checker % subject_num error check 
         subject_num = input("Which subject are you looking for? Enter a number between 1 and 27 (inclusive) --> "); % subject number from user input
         if (subject_num >= 1 && subject_num <= 27) 
-            if (subject_num >= invalid_num(i) && subject_num <= invalid_num(end))
+            if (subject_num >= invalid_num(1) && subject_num <= invalid_num(end))
                 for i = 1:len % length of invalid_num 
                     if subject_num == invalid_num(i)
                         fprintf("\nSubject not found!\n\n");
